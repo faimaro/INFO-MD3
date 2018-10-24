@@ -4,18 +4,18 @@ import random
 
 def crearMaquina():
     # print(enumerarMaquinas(6)[0])
-    maq = enumerarMaquinas(2)
-    estados = maq[1]#['a','b','FIN']#eval(input("Ingrese lista de estados (ej:['q1','FIN'] => "))
-    print(maq[0][1])
+    maq = enumerarMaquinas(3)
+    estados = maq[3]#['a','b','FIN']#eval(input("Ingrese lista de estados (ej:['q1','FIN'] => "))
+    print(maq[2])
     print(estados)
-    trans = maq[0][1]
+    trans = maq[2]
     
     #[['a', '1>b', '1<a'], ['b', '0<a', 'fin']] #crearTabla(estados)
     # trans = [['a', 'fin', '1<a'], ['b', 'fin', 'fin']]
     # trans = [['a', '1>b', '1<a'], ['b', '1>c', '0>c'], ['c', '1<a', 'fin']]
     # trans = [['a', '1>b', '1<a'], ['b', '0<a', 'fin']]
     cinta = crearCinta()
-    test = procesar(trans,cinta,estados,3) #pruebo la cantidad de pasos=3
+    test = procesar(trans,cinta,estados,10) #pruebo la cantidad de pasos=3
     print("kk",test)
 
        
@@ -46,11 +46,11 @@ def crearCinta():
 
 def procesar(trans,cinta_entrada,estados,cant_pasos):
     cinta = cinta_entrada
-    # print(cinta)
+    print(trans)
     cabezal = int(len(cinta)/2) #posicion del cabezal
     pasos = 0
     # fin = estados.pop()
-    # print(estados)
+    print(estados)
     estado_str = estados[0] #estado inicial a
     estado_idx = 0 #estado inicial a
     
@@ -70,7 +70,11 @@ def procesar(trans,cinta_entrada,estados,cant_pasos):
             if a[1]=='>':                
                 cabezal +=1
             if a[1]=='<':
-                cabezal -= 1         
+                cabezal -= 1 
+            if a[2] != 'n' and a[2] != 'N' :   
+            # print(estado_idx)         
+                estado_str = a[2]
+                estado_idx = estados.index(a[2]) 
                  
 
         if entrada=='1' and estado_str == trans[estado_idx][0]:
@@ -83,12 +87,12 @@ def procesar(trans,cinta_entrada,estados,cant_pasos):
             if a[1]=='>':                
                 cabezal +=1
             if a[1]=='<':
-                cabezal -= 1
-            
+                cabezal -= 1            
 
-        if a[2] != 'n' and a[2] != 'N' :            
-            estado_str = a[2]
-            estado_idx = estados.index(a[2])
+            if a[2] != 'n' and a[2] != 'N' :   
+                # print(estado_idx)         
+                estado_str = a[2]
+                estado_idx = estados.index(a[2])
         else:break
     # print(cinta)        
               
@@ -102,19 +106,19 @@ def procesar(trans,cinta_entrada,estados,cant_pasos):
 def enumerarMaquinas(tam):
     maquinas =[]
     maq_est=[]
+    general=[]
     for z in range (0,10):
         # buena=True
         a = [[0] * 3 for i in range(tam)]
-        estados = []
-        
-        while len(estados)<2:
+        estados = []        
+        while len(estados)<tam:
             e = random.choice(['a','b','c','d','e','f','g','h','i','j','k'])
             if e in estados:
-                # e = random.choice(['a','b','c','d','e','f','g','h','i'])
                 pass
             else:
                 estados.append(e)
-        for i in range (0,len(estados)):
+                
+        for i in range (0,tam):
             a[i][0]= estados[i] #VER ESTADOS...
             e1 = random.choice(estados)
             c1 = random.choice(['0','1'])
@@ -124,14 +128,13 @@ def enumerarMaquinas(tam):
             c2 = random.choice(['0','1'])
             d2 = random.choice(['<','>'])
             a[i][2] = c2 + d2 + e2
-
+        
         a[random.randrange(len(estados))][random.randint(1,2)] = 'FIN'
-        # print(a)
-        # print(str)
         maquinas.append(a)
-    maq_est.append(maquinas)
-    maq_est.append(estados)
-    return (maq_est)
+        maq_est.append(estados)
+        general.append(maquinas[z])
+        general.append(maq_est[z])
+    return (general)
 
 
 crearMaquina()
