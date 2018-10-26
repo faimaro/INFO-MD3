@@ -11,8 +11,8 @@ def crearMaquina():
         pass
         estados = maq[h+1]#['a','b','FIN']#eval(input("Ingrese lista de estados (ej:['q1','FIN'] => "))
         trans = maq[h]
-        cinta = crearCinta()
-        test = procesar(trans,cinta,estados,pasos) #pruebo la cantidad de pasos=3
+        # cinta = crearCinta()
+        test = procesar(trans,estados,pasos) #pruebo la cantidad de pasos=3
         if (test!=None):
             print("\n")
             print("********************")
@@ -30,7 +30,7 @@ def crearCinta():
         cinta.append('0') 
     return (cinta)
 
-def procesar(trans,cinta_entrada,estados,cant_pasos):
+def procesar(trans,estados,cant_pasos):
 
     cinta = deque('0')
     cabezal = 0 #posicion del cabezal
