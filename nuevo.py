@@ -4,9 +4,11 @@ from collections import deque
 
 def crearMaquina():
     # print(enumerarMaquinas(6)[0])
-    est = eval(input("cuantos estados ? :"))
-    pasos = eval(input("cuantos pasos maximo ? :"))
-    maq = enumerarMaquinas(est)
+    canti_maquinas = eval (input("Cuantas maquinas aleatorias querés generar? :"))
+    est = eval(input("Cuantos estados ? :"))
+    pasos = eval(input("Cuantos pasos máximo ? :"))
+    
+    maq = enumerarMaquinas(est,canti_maquinas)
     for h in range(0,len(maq),2):#len(maq)):
         pass
         estados = maq[h+1]#['a','b','FIN']#eval(input("Ingrese lista de estados (ej:['q1','FIN'] => "))
@@ -100,16 +102,15 @@ def procesar(trans,estados,cant_pasos):
         return(None)
 
     
-def enumerarMaquinas(tam):
+def enumerarMaquinas(tam,cant):
     maquinas =[]
     maq_est=[]
     general=[]
-    for z in range (0,50):
-        # buena=True
+    for z in range (0,cant):
         a = [[0] * 3 for i in range(tam)]
         estados = []        
         while len(estados)<tam:
-            e = random.choice(['a','b','c','d','e','f','g','h','i','j','k'])
+            e = random.choice(['a','b','c','d','e','f','g','h','i','j','k','l','m','o','p','q','r','s','t','u','v','w'])
             if e in estados:
                 pass
             else:
@@ -118,6 +119,10 @@ def enumerarMaquinas(tam):
         for i in range (0,tam):
             a[i][0]= estados[i] #VER ESTADOS...
             e1 = random.choice(estados)
+            if (i==0 and e1 == estados[i] ):
+                aux = estados
+                aux.pop(0)
+                e1 = random.choice(aux)
             c1 = random.choice(['0','1'])
             d1 = random.choice(['<','>'])
             a[i][1] =  c1 + d1 + e1
