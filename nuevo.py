@@ -10,10 +10,10 @@ def crearMaquina():
     pasos = eval(input("Cuantos pasos máximo ? :"))
     i = eval(input("Elegí que TAN interante te gustaría ? 1 - MUY, 2 - MASO, 3 - POCO :"))  
     if (i==1):
-        x = 90
+        x = 70
     else:
         if (i==2):
-            x = 60
+            x = 50
         else:
             if (i==3):
                 x = 30
@@ -21,44 +21,37 @@ def crearMaquina():
                 x = 10
     
     maq = enumerarMaquinas(est,canti_maquinas)
+    mayor_pasos = [0]
     for h in range(0,len(maq),2):#len(maq)):
         pass
-        estados = maq[h+1]#['a','b','FIN']#eval(input("Ingrese lista de estados (ej:['q1','FIN'] => "))
+        estados = maq[h+1]
         trans = maq[h]
-        # cinta = crearCinta()
-        test = procesar(trans,estados,pasos,x) #pruebo la cantidad de pasos=3
+        test = procesar(trans,estados,pasos,x) 
         if (test!=None):
             print("\n")
             print("********************")
             print(tabulate(test[1],headers=['0', '1'], tablefmt='fancy_grid')) #imprimo la MT como tabla
             print("Cantidad de pasos: ",test[0])
+            mayor_pasos.append(test[0])
             print("********************")
+    print("\n")
+    print("\n")
+    print('Informe')
+    print("********************")
+    print ('Pasos máximo:  ',max(mayor_pasos))
+    print ('Solo hay ',len(mayor_pasos)-1,' maquinas Interesantes.')
         
-    
-
-def crearCinta():    
-    cinta = [] #lista de strings
-    # for i in range (0,9):
-    #     cinta.insert(0,'0')
-    for i in range (0,1000):
-        cinta.append('0') 
-    return (cinta)
 
 def procesar(trans,estados,cant_pasos,importante):
 
-    cinta = deque('0')
-    cabezal = 0 #posicion del cabezal
-    pasos = 0
-    # fin = estados.pop()
+    cinta = deque('0') # estructura para agregar elementos al inicio más eficazmente
+    cabezal = 0 # posicion del cabezal inicial
+    pasos = 0   # contador de pasos de cada corrida
     estado_str = estados[0] #estado inicial a
-    estado_idx = 0 #estado inicial a
+    estado_idx = 0 # index estado inicial a
     
-    #chequeo si la maquina es buena
-    # if trans[0][1][1] == '<' or trans[0][1][1] == 'FIN' :
-    #     return(None)
-
-    while estado_str != "FIN": 
-        if pasos==cant_pasos:
+    while estado_str != "FIN":      #El corte del proceso es detectar el FIN en alguno de los pasos
+        if pasos>cant_pasos:       #S
             break
         a = list()
         # if trans[estado_idx][0]=='FIN':
@@ -107,7 +100,7 @@ def procesar(trans,estados,cant_pasos,importante):
 
     limite = Porcentaje(importante,cant_pasos)
 
-    if  pasos>limite and pasos<cant_pasos:                          #pasos<cant_pasos and pasos>1:
+    if  pasos>limite and pasos<=cant_pasos:                          #pasos<cant_pasos and pasos>1:
         result=[pasos,trans]
         return(result)
     else:
