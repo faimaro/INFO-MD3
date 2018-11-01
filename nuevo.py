@@ -160,3 +160,4 @@ def enumerarMaquinas(tam,cant):
 
 
 crearMaquina()
+
