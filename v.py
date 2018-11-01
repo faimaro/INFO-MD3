@@ -1,32 +1,49 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+ 
+import sys
+from tkinter import *
 from tabulate import tabulate
 import random 
 from collections import deque
 import copy
-
-def crearMaquina():
+app = Tk()
+app.title("Mi segunda App Grafica")
+vp = Frame(app)
+valor = ''
+vp.grid(column=0, row=0, padx=(80,80), pady=(30,30))
+vp.columnconfigure(0, weight=1)
+vp.rowconfigure(0, weight=1)
+c_maquinas = Entry(vp, width=6, textvariable=valor)
+c_maquinas.grid(column=2, row=1)
+c_estados = Entry(vp, width=6, textvariable=valor)
+c_estados.grid(column=2, row=2)
+c_pasos = Entry(vp, width=6, textvariable=valor)
+c_pasos.grid(column=2, row=3)
+canti_maquinas = Label(vp, text="¿Cuántas maquinas querés generar?")
+canti_maquinas.grid(column=1, row=1, sticky=(W,E))
+est = Label(vp, text="¿Cantidad de estados?")
+est.grid(column=1, row=2, sticky=(W,E))
+pasos = Label(vp, text="¿Cuántos pasos máximo?")
+pasos.grid(column=1, row=3, sticky=(W,E))
+boton = Button(vp, text="Procesar", command=hacer_click(c_maquinas,c_estados,c_pasos))
+boton.grid(column=2, row=5)
+app.mainloop()
+def crearMaquina(maquinas,estados,pasos):
     # print(enumerarMaquinas(6)[0])
-    canti_maquinas = eval (input("Cuantas maquinas aleatorias querés generar? :"))
-    est = eval(input("Cuantos estados ? :"))
-    pasos = eval(input("Cuantos pasos máximo ? :"))
-    i = eval(input("Elegí que TAN interante te gustaría ? 1 - MUY, 2 - MASO, 3 - POCO :"))  
-    if (i==1):
-        x = 90
-    else:
-        if (i==2):
-            x = 60
-        else:
-            if (i==3):
-                x = 30
-            else:
-                x = 10
+    # canti_maquinas = eval (input("Cuantas maquinas aleatorias querés generar? :"))
+    # est = eval(input("Cuantos estados ? :"))
+    # pasos = eval(input("Cuantos pasos máximo ? :"))
     
-    maq = enumerarMaquinas(est,canti_maquinas)
+    
+    maq = enumerarMaquinas(estados,maquinas)
     for h in range(0,len(maq),2):#len(maq)):
         pass
         estados = maq[h+1]#['a','b','FIN']#eval(input("Ingrese lista de estados (ej:['q1','FIN'] => "))
         trans = maq[h]
         # cinta = crearCinta()
-        test = procesar(trans,estados,pasos,x) #pruebo la cantidad de pasos=3
+        test = procesar(trans,estados,pasos) #pruebo la cantidad de pasos=3
         if (test!=None):
             print("\n")
             print("********************")
@@ -35,7 +52,6 @@ def crearMaquina():
             print("********************")
         
     
-
 def crearCinta():    
     cinta = [] #lista de strings
     # for i in range (0,9):
@@ -44,7 +60,7 @@ def crearCinta():
         cinta.append('0') 
     return (cinta)
 
-def procesar(trans,estados,cant_pasos,importante):
+def procesar(trans,estados,cant_pasos):
 
     cinta = deque('0')
     cabezal = 0 #posicion del cabezal
@@ -104,9 +120,8 @@ def procesar(trans,estados,cant_pasos,importante):
                 estado_str = a[2]
                 estado_idx = estados.index(a[2])
             else:break     
-
-    limite = Porcentaje(importante,cant_pasos)
-
+                   
+    limite = Porcentaje(60,cant_pasos)
     if  pasos>limite and pasos<cant_pasos:                          #pasos<cant_pasos and pasos>1:
         result=[pasos,trans]
         return(result)
@@ -158,5 +173,14 @@ def enumerarMaquinas(tam,cant):
         general.append(maq_est[z])
     return (general)
 
+   
+        # _valor = int(entrada_texto.get())
+        # _valor = _valor * 5
+        # etiqueta.config(text=_valor)
+    # except ValueError:
+    #     etiqueta.config(text="Introduce un numero!")
 
-crearMaquina()
+
+
+    
+    #Ventana Principal
